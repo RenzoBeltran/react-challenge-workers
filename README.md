@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Node version used in this challenge
+node v16.3.0
 ## Available Scripts
 
 In the project directory, you can run:
