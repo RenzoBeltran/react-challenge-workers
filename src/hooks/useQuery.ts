@@ -1,4 +1,4 @@
 const useQuery = () => {
-    return {}
+  return {}
 }
 export default useQuery;
