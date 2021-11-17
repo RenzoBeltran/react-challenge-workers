@@ -1,8 +1,8 @@
+import Card from '../components/Card'
+
 const WorkerDetail = () => {
   return (
-    <div>
-      Detail of a worker
-    </div>
+    <Card />
   );
 };
 
