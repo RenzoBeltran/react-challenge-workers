@@ -8,6 +8,8 @@ node v16.3.0
 
 In the project directory, you can run:
 
+### `yarn install`
+Install all the necessary dependencies to run correctly the project.
 ### `yarn start`
 
 Runs the app in the development mode.\
