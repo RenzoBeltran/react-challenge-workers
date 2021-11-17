@@ -3,7 +3,7 @@ interface IFilter {
   handleCloseFilter(): any;
 }
 
-const index: React.FC<IFilter> = ({ title, handleCloseFilter }) => {
+const Index: React.FC<IFilter> = ({ title, handleCloseFilter }) => {
   const clickToScreen = (event: any) => {
     if (event.path[0].id === "close-modal")
       handleCloseFilter();
@@ -41,4 +41,4 @@ const index: React.FC<IFilter> = ({ title, handleCloseFilter }) => {
   );
 };
 
-export default index;
+export default Index;
