@@ -1,7 +1,7 @@
 const NotFound = () => {
   return (
-    <div>
-      404 Not found :(
+    <div className="h-screen flex justify-center items-center text-9xl">
+      404 Not Found :(
     </div>
   );
 };
