@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import jsonData from '../data.json';
 import Filter from '../components/Filter'
 import ReactPaginate from 'react-paginate';
+import filterData from '../helpers/FilterData';
+import useQuery from '../hooks/useQuery';
 import {
   AiOutlineFileExcel,
   AiFillDelete,
@@ -20,9 +22,11 @@ interface IHome {
 const Home: React.FC<IHome> = ({ itemsPerPage }) => {
   const data: any = jsonData.results;
   const [isFilterOpened, setIsFilterOpened] = useState(false);
+  const [filteredItems, setFilteredItems] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const query = useQuery();
 
   const handleCloseFilter = (): void => {
     setIsFilterOpened(false);
@@ -39,8 +43,10 @@ const Home: React.FC<IHome> = ({ itemsPerPage }) => {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(data?.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data?.length / itemsPerPage));
+    const filteredData = filterData(data, query);
+    setFilteredItems(filteredData);
+    setCurrentItems(filteredData?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredData?.length / itemsPerPage));
     // eslint-disable-next-line
   }, [itemOffset, itemsPerPage, data]);
 
@@ -86,6 +92,7 @@ const Home: React.FC<IHome> = ({ itemsPerPage }) => {
       <div className="flex justify-around mt-8">
         <button className="bg-green-500 hover:bg-green-600 text-white font-bold px-2 rounded">Export to Excel <AiOutlineFileExcel size='1.2rem' className='inline' /></button>
         <div className="flex items-center">
+          <div className='mr-5'>{`${itemOffset} - ${pageCount * itemsPerPage - itemsPerPage === itemOffset ? filteredItems?.length : itemOffset + itemsPerPage} of ${filteredItems?.length}`}</div>
           <ReactPaginate
             nextLabel={<AiOutlineRight />}
             onPageChange={handlePageClick}
