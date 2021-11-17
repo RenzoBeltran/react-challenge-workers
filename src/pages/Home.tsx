@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import jsonData from '../data.json';
+import Filter from '../components/Filter'
 import {
   AiOutlineFileExcel,
   AiFillDelete,
@@ -10,12 +12,22 @@ import {
 } from 'react-icons/ai';
 
 const Home = () => {
+  const [isFilterOpened, setIsFilterOpened] = useState(false);
+
+  const handleCloseFilter = (): void => {
+    setIsFilterOpened(false);
+  }
+
+  const handleOpenFilter = (): void => {
+    setIsFilterOpened(true);
+  }
+
   return (
     <div>
       <div className="ml-16">
         <h2 className="my-5 text-5xl">Workers</h2>
         <div className="flex justify-end mr-16">
-          <button className="bg-transparent mr-5 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" >Filter <AiOutlineFilter size='1.5rem' className="inline" /></button>
+          <button className="bg-transparent mr-5 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={handleOpenFilter}>Filter <AiOutlineFilter size='1.5rem' className="inline" /></button>
           <button className="bg-blue-500 mr-5 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Add Workers <AiOutlineUser size='1.5rem' className='inline' /></button>
           <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Delete All <AiFillDelete size='1.5rem' className='inline' /></button>
         </div>
@@ -55,6 +67,7 @@ const Home = () => {
           <div>1-13 of 200</div></div>
         <div>Pagination</div>
       </div>
+      {isFilterOpened && <Filter title="Filter" handleCloseFilter={handleCloseFilter} />}
     </div>
   );
 };

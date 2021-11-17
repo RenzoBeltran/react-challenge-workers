@@ -10,7 +10,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.filter-bg {
+  background-color: rgba(34, 34, 34, 0.76);
+}
+
+.bg-table {
+  background-color: #e2e8f0;
 }
