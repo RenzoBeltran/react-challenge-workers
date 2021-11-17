@@ -49,12 +49,12 @@ const Home: React.FC<IHome> = ({ itemsPerPage }) => {
     setCurrentItems(filteredData?.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(filteredData?.length / itemsPerPage));
     // eslint-disable-next-line
-  }, [itemOffset, itemsPerPage, data]);
+  }, [itemOffset, itemsPerPage, data, query]);
 
   return (
     <div>
       <div className="ml-16">
-        <h2 className="my-5 text-5xl">Workers</h2>
+        <Link to="/"><h2 className="my-5 text-5xl">Workers</h2></Link>
         <div className="flex justify-end mr-16">
           <button className="bg-transparent mr-5 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={handleOpenFilter}>Filter <AiOutlineFilter size='1.5rem' className="inline" /></button>
           <button className="bg-blue-500 mr-5 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Add Workers <AiOutlineUser size='1.5rem' className='inline' /></button>
@@ -63,7 +63,7 @@ const Home: React.FC<IHome> = ({ itemsPerPage }) => {
       </div>
       <div className="ml-16 my-5">
         <AiTwotoneHome className='inline' /> <AiOutlineDoubleRight className='inline' />
-        Workers
+        <Link to="/">Workers</Link>
       </div>
       <table className="m-auto w-11/12 table-auto border-collapse bg-white">
         <thead>
