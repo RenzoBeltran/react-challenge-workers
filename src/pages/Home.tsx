@@ -4,6 +4,7 @@ import Filter from '../components/Filter'
 import ReactPaginate from 'react-paginate';
 import filterData from '../helpers/FilterData';
 import useQuery from '../hooks/useQuery';
+import { Link } from 'react-router-dom';
 import {
   AiOutlineFileExcel,
   AiFillDelete,
@@ -77,7 +78,7 @@ const Home: React.FC<IHome> = ({ itemsPerPage }) => {
         <tbody>
           {currentItems?.map((item: any, index: number) => {
             return <tr key={index}>
-              <td className={`py-1 pr-3 text-left text-1xl font-light text-blue-500 hover:underline ${index % 2 === 0 ? 'bg-table' : null}`}>{`${item.name.first} ${item.name.last}`}</td>
+              <td className={`py-1 pr-3 text-left text-1xl font-light text-blue-500 hover:underline ${index % 2 === 0 ? 'bg-table' : null}`}><Link to={`/details/${item.name.first} ${item.name.last}`}>{`${item.name.first} ${item.name.last}`}</Link></td>
               <td className={`py-1 pr-3 text-1xl font-light  ${index % 2 === 0 ? 'bg-table' : null}`}>{item.gender}</td>
               <td className={`py-1 pr-3 text-1xl font-light  ${index % 2 === 0 ? 'bg-table' : null}`}>{item.email}</td>
               <td className={`py-1 pr-3 text-1xl font-light  ${index % 2 === 0 ? 'bg-table' : null}`}>{item.dob.age}</td>
