@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import jsonData from '../data.json';
 import Filter from '../components/Filter'
+import ReactPaginate from 'react-paginate';
 import {
   AiOutlineFileExcel,
   AiFillDelete,
@@ -8,11 +9,20 @@ import {
   AiOutlineFilter,
   AiTwotoneEdit,
   AiTwotoneHome,
-  AiOutlineDoubleRight
+  AiOutlineDoubleRight,
+  AiOutlineRight,
+  AiOutlineLeft
 } from 'react-icons/ai';
 
-const Home = () => {
+interface IHome {
+  itemsPerPage: number;
+}
+const Home: React.FC<IHome> = ({ itemsPerPage }) => {
+  const data: any = jsonData.results;
   const [isFilterOpened, setIsFilterOpened] = useState(false);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
 
   const handleCloseFilter = (): void => {
     setIsFilterOpened(false);
@@ -21,6 +31,18 @@ const Home = () => {
   const handleOpenFilter = (): void => {
     setIsFilterOpened(true);
   }
+
+  const handlePageClick = (event: any) => {
+    const newOffset = event.selected * itemsPerPage % data?.length;
+    setItemOffset(newOffset);
+  };
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(data?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(data?.length / itemsPerPage));
+    // eslint-disable-next-line
+  }, [itemOffset, itemsPerPage, data]);
 
   return (
     <div>
@@ -47,7 +69,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {jsonData.results?.map((item: any, index: number) => {
+          {currentItems?.map((item: any, index: number) => {
             return <tr key={index}>
               <td className={`py-1 pr-3 text-left text-1xl font-light text-blue-500 hover:underline ${index % 2 === 0 ? 'bg-table' : null}`}>{`${item.name.first} ${item.name.last}`}</td>
               <td className={`py-1 pr-3 text-1xl font-light  ${index % 2 === 0 ? 'bg-table' : null}`}>{item.gender}</td>
@@ -64,8 +86,21 @@ const Home = () => {
       <div className="flex justify-around mt-8">
         <button className="bg-green-500 hover:bg-green-600 text-white font-bold px-2 rounded">Export to Excel <AiOutlineFileExcel size='1.2rem' className='inline' /></button>
         <div className="flex items-center">
-          <div>1-13 of 200</div></div>
-        <div>Pagination</div>
+          <ReactPaginate
+            nextLabel={<AiOutlineRight />}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={2}
+            pageCount={pageCount}
+            previousLabel={<AiOutlineLeft />}
+            pageClassName="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            previousClassName="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            nextClassName="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            breakLabel="..."
+            containerClassName="flex items-center space-x-1"
+            activeClassName="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+            marginPagesDisplayed={2}
+          />
+        </div>
       </div>
       {isFilterOpened && <Filter title="Filter" handleCloseFilter={handleCloseFilter} />}
     </div>
